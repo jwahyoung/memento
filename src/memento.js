@@ -1,5 +1,5 @@
 angular.module('Memento', ['underscore'])
-	.factory('Memento', function () {
+	.factory('Memento', function ($log) {
 	    return function (target) {
 
 	        this.stack = [];
@@ -8,8 +8,8 @@ angular.module('Memento', ['underscore'])
 	        // TODO: add timestamps.
         	var that = this;
 	        var debug = function () {
-	        	console.log("CURSOR", that.cursor);
-	        	console.log("STACK:", that.stack);
+	        	$log("CURSOR", that.cursor);
+	        	$log("STACK:", that.stack);
 	        };
 	        
 	        this.canUndo = function () {
@@ -37,7 +37,7 @@ angular.module('Memento', ['underscore'])
 	        this.push = function (obj) {
 	        	// Check for equality.
 	            if (_.isEqual(this.stack[this.cursor - 1], obj)) {
-	            	console.log("not pushing");
+	            	$log("not pushing");
 	                return false;
 	            }
 	            // Slice array.
