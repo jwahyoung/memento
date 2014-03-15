@@ -41,29 +41,26 @@ describe('memento core test suite', function () {
 	});
 
 	it('should return original object on undo()', function () {
-		if (memento.push({ key: 'value', num: 2 })) {
-			expect(memento.undo()).toEqual(testObject);
-		} else {
-			this.fail(Error('Memento.push() failed.'));
-		}
+		memento.push({ key: 'value', num: 2 });
+		expect(memento.undo()).toEqual(testObject);
 
-		if (memento.push({ key: 'value', num: 2 }) && memento.push({ key: 'value', num: 3 })) {
-			expect(memento.undo()).toEqual({ key: 'value', num: 2 });
-		} else {
-			this.fail(Error('Memento.push() failed.'));
-		}
+		memento.push({ key: 'value', num: 2 });
+		memento.push({ key: 'value', num: 3 });
+		expect(memento.undo()).toEqual({ key: 'value', num: 2 });
 	});
 
 	it('should return modified object on redo()', function () {
-		this.fail(Error('Test not implemented'));
+		memento.push({ key: 'value', num: 2 });
+		memento.undo();
+		expect(memento.redo()).toEqual({ key: 'value', num: 2 });
 	});
 
 	it('should not undo() if at beginning of stack', function () {
-		this.fail(Error('Test not implemented'));
+		expect(memento.undo()).toBeUndefined();
 	});
 
 	it('should not redo() if at end of stack', function () {
-		this.fail(Error('Test not implemented'));
+		expect(memento.redo()).toBeUndefined();
 	});
 
 	// TODO: Implement revert to original, clearing history.

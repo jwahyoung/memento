@@ -18,7 +18,7 @@ angular.module('Memento', [])
 	        this.undo = function () {
 	            if (this.canUndo()) {
 	            	cursor--;
-	            	return cursor - 1 > 0 ? angular.copy(stack[cursor - 1]) : angular.copy(_orig);
+	            	return cursor - 1 >= 0 ? angular.copy(stack[cursor - 1]) : angular.copy(_orig);
 	            }
 	        };
 
