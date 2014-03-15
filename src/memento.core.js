@@ -1,9 +1,9 @@
 angular.module('Memento', [])
 	.provider('Memento', function () {
-		var storage = {
-			memory: 'memoryStorage',
+		var storeProvider = {
+			window: 'windowStorage',
 			session: 'sessionStorage'
-		}
+		};
 
 		var coreProvider = function ($store) {
 			return function (target) {
@@ -35,10 +35,8 @@ angular.module('Memento', [])
 			};
 		};
 
-		this.storageMethod = 'memory';
+		this.storageMethod = 'window';
 
-		coreProvider['$inject'] = [storage[this.storageMethod]];
-
-
+		coreProvider['$inject'] = [storeProvider[this.storageMethod]];
 		this.$get = coreProvider;
 	});

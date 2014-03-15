@@ -1,5 +1,5 @@
 angular.module('Memento')
-	.factory('memoryStorage', function () {
+	.factory('windowStorage', function () {
 		return function (seed) {
 			var stack = [];
 			var cursor = 0;
@@ -8,23 +8,22 @@ angular.module('Memento')
 			this.root = function () {
 				cursor = 0;
 				return angular.copy(_orig);
-			}
+			};
 
 			this.prev = function () {
 				if (!this.atTail()) {
 					cursor--;
-					return cursor - 1 >= 0
-						? angular.copy(stack[cursor - 1])
-						: angular.copy(_orig);
+					return cursor - 1 >= 0 ? 
+						angular.copy(stack[cursor - 1]) : angular.copy(_orig);
 				}
-			}
+			};
 
 			this.next = function () {
 				if (!this.atHead()) {
 					cursor++;
 					return angular.copy(stack[cursor - 1]);
 				}
-			}
+			};
 
 			this.put = function (val) {
 				if (angular.equals(stack[cursor - 1], val)) {
@@ -44,5 +43,5 @@ angular.module('Memento')
 			this.atHead = function () {
 				return !(stack.length && cursor <= stack.length);
 			};
-		}
+		};
 	});
