@@ -46,5 +46,10 @@ angular.module('Memento', [])
 	            cursor++;
 	            return !!stack.push(angular.copy(obj));
 	        };
+
+	        this.revert = function () {
+	        	cursor = 0;
+	        	return angular.copy(_orig);
+	        };
 	    };
 	});

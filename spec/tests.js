@@ -2,7 +2,7 @@
 
 describe('memento core test suite', function () {
 	var memento;
-	var testObject = {
+	var seedObject = {
 		key: 'value',
 		num: 1
 	};
@@ -11,7 +11,7 @@ describe('memento core test suite', function () {
 		module('Memento');
 
 		inject(function(_Memento_) {
-			memento = new _Memento_(testObject);
+			memento = new _Memento_(seedObject);
 		});
 	});
 
@@ -42,7 +42,7 @@ describe('memento core test suite', function () {
 
 	it('should return original object on undo()', function () {
 		memento.push({ key: 'value', num: 2 });
-		expect(memento.undo()).toEqual(testObject);
+		expect(memento.undo()).toEqual(seedObject);
 
 		memento.push({ key: 'value', num: 2 });
 		memento.push({ key: 'value', num: 3 });
@@ -62,12 +62,14 @@ describe('memento core test suite', function () {
 	it('should not redo() if at end of stack', function () {
 		expect(memento.redo()).toBeUndefined();
 	});
-
-	// TODO: Implement revert to original, clearing history.
-	// 
-	// it('should return seed object on revert()', function () {
-	// 	this.fail(Error('Test not implemented'));
-	// });
+	
+	it('should return seed object on revert()', function () {
+		memento.push({ key: 'value', num: 2 });
+		memento.push({ key: 'value', num: 3 });
+		memento.push({ key: 'value', num: 4 });
+		memento.push({ key: 'value', num: 5 });
+		expect(memento.revert()).toEqual(seedObject);
+	});
  
  	// it('should clear the stack on clear()', function () {
  	// 	this.fail(Error('Test not implemented'));
