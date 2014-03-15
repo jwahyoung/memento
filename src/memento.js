@@ -1,53 +1,50 @@
-angular.module('Memento', ['underscore'])
+angular.module('Memento', [])
 	.factory('Memento', function ($log) {
 	    return function (target) {
-
-	        this.stack = [];
-	        this.cursor = 0;
+    		var _orig = angular.copy(target);
+	        var stack = [];
+	        var cursor = 0;
 
 	        // TODO: add timestamps.
         	var that = this;
 	        var debug = function () {
-	        	$log("CURSOR", that.cursor);
-	        	$log("STACK:", that.stack);
+	        	$log.info("CURSOR", that.cursor);
+	        	$log.info("STACK:", that.stack);
 	        };
 	        
 	        this.canUndo = function () {
-        		return this.stack.length && this.cursor > 1;
+        		return stack.length && cursor > 0;
 	        };
 	        this.undo = function () {
 	            if (this.canUndo()) {
-	            	this.cursor--;
-   		            debug();
-	            	return this.stack[this.cursor - 1];
+	            	cursor--;
+	            	return cursor - 1 > 0 ? angular.copy(stack[cursor - 1]) : angular.copy(_orig);
 	            }
 	        };
 
     		this.canRedo = function () {
-    			return this.stack.length && this.cursor <= this.stack.length;
+    			return stack.length && cursor <= stack.length;
     		};
 	        this.redo = function () {
 				if (this.canRedo()) {
-	            	this.cursor++;
-   		            debug();
-	            	return this.stack[this.cursor - 1];
+	            	cursor++;
+	            	return angular.copy(stack[cursor - 1]);
 	            }
 	        };
 
 	        this.push = function (obj) {
 	        	// Check for equality.
-	            if (_.isEqual(this.stack[this.cursor - 1], obj)) {
-	            	$log("not pushing");
+	            if (angular.equals(stack[cursor - 1], obj)) {
+	            	$log.warn("not pushing");
 	                return false;
 	            }
 	            // Slice array.
-	            if (this.cursor < this.stack.length) {
-    				this.stack = this.stack.slice(0, this.cursor);
+	            if (cursor < stack.length) {
+    				stack = stack.slice(0, cursor);
     			}
 	            // Push changes.
-	            this.cursor++;
-	            this.stack.push(angular.copy(obj));
-	            debug();
+	            cursor++;
+	            return !!stack.push(angular.copy(obj));
 	        };
 	    };
 	});

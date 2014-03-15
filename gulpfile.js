@@ -1,21 +1,30 @@
-var gulp = require('gulp')
-  , uglify = require('gulp-uglify')
-  , jshint = require('gulp-jshint');
+var gulp = require('gulp'),
 
-var paths = {
-	src: "src/*.js"
-	, dist: "dist"
-};
+	uglify = require('gulp-uglify'),
+	jshint = require('gulp-jshint'),
+	jasmine = require('gulp-jasmine'), 
+	karma = require('gulp-karma'),
 
-gulp.task('jshint', function () {
-	return gulp.src(paths.src)
-		.pipe(jshint());
-});
+	paths = {
+		scripts: "scripts/*.js",
+		spec: "spec/*.js",
+		dist: "dist"
+	};
 
-gulp.task('uglify', function () {
-	return gulp.src(paths.src)
+gulp.task('prepare', function () {
+	return gulp.src(paths.scripts)
+		.pipe(jshint())
+		.pipe(jshint.reporter('default'))
 		.pipe(uglify())
-		.pipe(gulp.dest(paths.dist));
+		.pipe(gulp.dest(paths.dist))
 });
 
-gulp.task('default', ['jshint', 'uglify']);
+gulp.task('test', function () {
+	gulp.src('./dummy')
+		.pipe(karma({
+			configFile: 'karma.conf.js',
+			action: 'run'
+		}));
+});
+
+gulp.task('default', ['prepare', 'test']);
