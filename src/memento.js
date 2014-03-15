@@ -1,48 +1,30 @@
 angular.module('Memento', [])
-	.factory('Memento', function ($log) {
-	    return function (target) {
-    		var _orig = angular.copy(target),
-	            stack = [],
-	            cursor = 0;
-	        
-	        this.canUndo = function () {
-        		return stack.length && cursor > 0;
-	        };
+	.factory('Memento', ['memoryStorage', function ($store) {
+		return function (target) {
+			var store = new $store(target);
+			
+			this.canUndo = function () {
+				return !store.atHead();
+			};
 
-	        this.undo = function () {
-	            if (this.canUndo()) {
-	            	cursor--;
-	            	return cursor - 1 >= 0
-	            		? angular.copy(stack[cursor - 1])
-	            		: angular.copy(_orig);
-	            }
-	        };
+			this.undo = function () {
+				return store.prev();
+			};
 
-    		this.canRedo = function () {
-    			return stack.length && cursor <= stack.length;
-    		};
+			this.canRedo = function () {
+				return !store.atHead();
+			};
 
-	        this.redo = function () {
-				if (this.canRedo()) {
-	            	cursor++;
-	            	return angular.copy(stack[cursor - 1]);
-	            }
-	        };
+			this.redo = function () {
+				return store.next();
+			};
 
-	        this.push = function (obj) {
-	            if (angular.equals(stack[cursor - 1], obj)) {
-	                return false;
-	            }
-	            if (cursor < stack.length) {
-    				stack = stack.slice(0, cursor);
-    			}
-	            cursor++;
-	            return !!stack.push(angular.copy(obj));
-	        };
+			this.push = function (obj) {
+				return store.put(obj);
+			};
 
-	        this.revert = function () {
-	        	cursor = 0;
-	        	return angular.copy(_orig);
-	        };
-	    };
-	});
+			this.revert = function () {
+				return store.root();
+			};
+		};
+	}]);

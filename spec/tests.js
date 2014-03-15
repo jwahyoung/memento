@@ -57,9 +57,16 @@ describe('memento core test suite', function () {
 
 	it('should not undo() if at beginning of stack', function () {
 		expect(memento.undo()).toBeUndefined();
+		memento.push({ key: 'value', num: 2 });
+		memento.undo();
+		expect(memento.undo()).toBeUndefined();
 	});
 
 	it('should not redo() if at end of stack', function () {
+		expect(memento.redo()).toBeUndefined();
+		memento.push({ key: 'value', num: 2 });
+		memento.undo();
+		memento.redo();
 		expect(memento.redo()).toBeUndefined();
 	});
 	
