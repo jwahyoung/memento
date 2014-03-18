@@ -1,0 +1,25 @@
+<html data-ng-app="memento-example">
+<head>
+
+<title>Memento example</title>
+
+<script src="../lib/angular/angular.min.js"></script>
+<script src="../src/memento.core.js"></script>
+<script src="../src/memento.windowStorage.js"></script>
+<script src="index.js"></script>
+
+</head>
+<body data-ng-controller="main">
+<h1>Memento Example - Todo List</h1>
+<ul>
+	<li data-ng-repeat="task in tasks">{{task.name}} - <a href="javascript:void();" data-ng-click="remove($index)">Remove</span></li>
+</ul>
+<form data-ng-submit="add(newTask)">
+	<input type="text" data-ng-model="newTask">
+	<button type="submit">Add New</button>
+</form>
+<button data-ng-disabled="!weCanUndo()" data-ng-click="undo()">Undo</button>
+<button data-ng-disabled="!weCanRedo()" data-ng-click="redo()">Redo</button>
+<button data-ng-click="revert()">Revert</button>
+</body>
+<html>
