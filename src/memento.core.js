@@ -10,7 +10,7 @@ angular.module('Memento', [])
 				var store = new $store(target);
 				
 				this.canUndo = function () {
-					return !store.atHead();
+					return !store.atTail();
 				};
 
 				this.undo = function () {
