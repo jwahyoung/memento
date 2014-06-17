@@ -16,13 +16,15 @@ angular.module('memento-example', ['Memento'])
 		};
 
 		$scope.add = function (value) {
+			if (value === '') return;
+
 			$scope.tasks.push({ name: value });
 			memento.push($scope.tasks);
 			$scope.newTask = '';
 		};
 
-		$scope.weCanUndo = memento.canUndo;
-		$scope.weCanRedo = memento.canRedo;
+		$scope.weCanUndo = function () { return memento.canUndo() };
+		$scope.weCanRedo = function () { return memento.canRedo() };
 		$scope.undo = function () {
 			$scope.tasks = memento.undo() || $scope.tasks;
 		};
