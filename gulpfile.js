@@ -2,7 +2,6 @@ var gulp = require('gulp'),
 
 	uglify = require('gulp-uglify'),
 	jshint = require('gulp-jshint'),
-	jasmine = require('gulp-jasmine'), 
 	karma = require('gulp-karma'),
 
 	paths = {
