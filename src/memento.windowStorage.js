@@ -41,7 +41,7 @@
 			};
 
 			this.atHead = function () {
-				return !(stack.length && cursor <= stack.length);
+				return !(stack.length && cursor < stack.length);
 			};
 		};
 	});
