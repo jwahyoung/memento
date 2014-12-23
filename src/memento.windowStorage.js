@@ -1,27 +1,27 @@
-angular.module('Memento')
-	.factory('windowStorage', function () {
+(function (window, module, ng, undefined) {
+	module.factory('windowStorage', function () {
 		return function (seed) {
 			var stack = [];
 			var cursor = 0;
-			var _orig = angular.copy(seed);
+			var _orig = ng.copy(seed);
 
 			this.root = function () {
 				cursor = 0;
-				return angular.copy(_orig);
+				return ng.copy(_orig);
 			};
 
 			this.prev = function () {
 				if (!this.atTail()) {
 					cursor--;
 					return cursor - 1 >= 0 ? 
-						angular.copy(stack[cursor - 1]) : angular.copy(_orig);
+						ng.copy(stack[cursor - 1]) : ng.copy(_orig);
 				}
 			};
 
 			this.next = function () {
 				if (!this.atHead()) {
 					cursor++;
-					return angular.copy(stack[cursor - 1]);
+					return ng.copy(stack[cursor - 1]);
 				}
 			};
 
@@ -33,7 +33,7 @@ angular.module('Memento')
 					stack = stack.slice(0, cursor);
 				}
 				cursor++;
-				return !!stack.push(angular.copy(val));
+				return !!stack.push(ng.copy(val));
 			};
 
 			this.atTail = function () {
@@ -45,3 +45,4 @@ angular.module('Memento')
 			};
 		};
 	});
+})(window, angular.module('Memento'), angular);

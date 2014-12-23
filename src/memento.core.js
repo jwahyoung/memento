@@ -1,5 +1,5 @@
-angular.module('Memento', [])
-	.provider('Memento', function () {
+(function (window, module, ng, undefined) {
+	module.provider('Memento', function () {
 		var storeProvider = {
 			window: 'windowStorage',
 			session: 'sessionStorage'
@@ -40,3 +40,4 @@ angular.module('Memento', [])
 		coreProvider['$inject'] = [storeProvider[this.storageMethod]];
 		this.$get = coreProvider;
 	});
+})(window, angular.module('Memento', []), angular);
