@@ -6,7 +6,7 @@ var gulp = require('gulp'),
 	karma = require('gulp-karma'),
 
 	paths = {
-		scripts: "scripts/*.js",
+		scripts: "src/*.js",
 		spec: "spec/*.js",
 		dist: "dist"
 	};
