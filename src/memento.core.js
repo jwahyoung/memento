@@ -6,8 +6,9 @@
 		};
 
 		var coreProvider = function ($store) {
-			return function (target) {
-				var store = new $store(target);
+			return function (target, maxCount) {
+                maxCount = parseInt(maxCount, 10) || false;
+				var store = new $store(target, maxCount);
 				
 				this.canUndo = function () {
 					return !store.atTail();
