@@ -1,6 +1,6 @@
 {
   "name": "memento",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "",
   "main": "memento.js",
   "scripts": {
@@ -8,14 +8,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/jedd-ahyoung/memento.git"
+    "url": "https://github.com/iamdenny/memento.git"
   },
   "author": "",
   "license": "BSD-2-Clause",
   "bugs": {
-    "url": "https://github.com/jedd-ahyoung/memento/issues"
+    "url": "https://github.com/iamdenny/memento/issues"
   },
-  "homepage": "https://github.com/jedd-ahyoung/memento",
+  "homepage": "https://github.com/iamdenny/memento",
   "devDependencies": {
     "gulp": "~3.5.6",
     "gulp-uglify": "~0.2.1",
