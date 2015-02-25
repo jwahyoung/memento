@@ -5,9 +5,11 @@
 
 	<script src="../bower_components/angular/angular.min.js"></script>
     <script src="../bower_components/localforage/dist/localforage.min.js"></script>
-    <script src="../bower_components/angular-localForage/dist/angular-localForage.min.js"></script>
 	<script src="../src/memento.core.js"></script>
-	<script src="../src/memento.windowStorage.js"></script>
+	<script src="../src/memento.indexedDb.js"></script>
+    <script src="../src/memento.localStorage.js"></script>
+    <script src="../src/memento.webSql.js"></script>
+    <script src="../src/memento.windowStorage.js"></script>
 	<script src="index.js"></script>
 
 </head>
@@ -22,8 +24,8 @@
 		<input type="text" data-ng-model="newTask">
 		<button type="submit">Add New</button>
 	</form>
-	<button data-ng-disabled="!weCanUndo()" data-ng-click="undo()">Undo</button>
-	<button data-ng-disabled="!weCanRedo()" data-ng-click="redo()">Redo</button>
+	<button data-ng-disabled="!canUndo" data-ng-click="undo()">Undo</button>
+	<button data-ng-disabled="!canRedo" data-ng-click="redo()">Redo</button>
 	<button data-ng-click="revert()">Revert</button>
 </body>
 <html>

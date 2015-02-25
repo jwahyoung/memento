@@ -1,14 +1,14 @@
 (function (window, module, ng, localforage, undefined) {
     'use strict';
 
-    module.factory('indexedDb', function () {
+    module.factory('localStorage', function () {
         localforage.config({
             driver: localforage.LOCALSTORAGE,
             name: 'memento'
         });
         localforage.clear(function() {
             // Run this code once the database has been entirely deleted.
-            console.log('indexedDb is now empty.');
+            console.log('localStorage is now empty.');
         });
 
         function getUnique() {

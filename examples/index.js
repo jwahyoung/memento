@@ -1,37 +1,69 @@
 angular.module('memento-example', ['Memento'])
 	.config(['MementoProvider', function (MementoProvider) {
 		// Here, we can configured Memento to use a different storage method.
-		MementoProvider.storageMethod = 'window';
+		MementoProvider.setStorageMethod('window');
+//        MementoProvider.setStorageMethod('localStorage');
+//        MementoProvider.setStorageMethod('webSql');
+//        MementoProvider.setStorageMethod('indexedDb');
 	}])
 	.controller('main', function ($scope, Memento) {
 		$scope.tasks = [
 			{ name: 'Update the memento.js README file' },
 			{ name: 'Add JSON deltas to main branch' }
 		];
+        $scope.canUndo = false;
+        $scope.canRedo = false;
 
 		var memento = new Memento($scope.tasks);
 
 		$scope.remove = function (index) {
 			$scope.tasks.splice(index, 1);
+            checkUndoRedo();
 		};
 
 		$scope.add = function (value) {
 			if (value === '') return;
 
 			$scope.tasks.push({ name: value });
-			memento.push($scope.tasks);
-			$scope.newTask = '';
+			memento.push($scope.tasks).then(function () {
+                $scope.newTask = '';
+                checkUndoRedo();
+            });
 		};
 
-		$scope.weCanUndo = function () { return memento.canUndo() };
-		$scope.weCanRedo = function () { return memento.canRedo() };
+        function checkUndoRedo() {
+            memento.canUndo().then(function (result) {
+                $scope.canUndo = result;
+                safeApply();
+            });
+            memento.canRedo().then(function (result) {
+                $scope.canRedo = result;
+                safeApply();
+            });
+        }
+
+        function safeApply() {
+            if (!$scope.$$phase) {
+                $scope.$digest();
+            }
+        }
+
 		$scope.undo = function () {
-			$scope.tasks = memento.undo() || $scope.tasks;
+            memento.undo().then(function (tasks) {
+                $scope.tasks = tasks || $scope.tasks;
+                checkUndoRedo();
+            });
 		};
 		$scope.redo = function () {
-			$scope.tasks = memento.redo() || $scope.tasks;
+            memento.redo().then(function (tasks) {
+                $scope.tasks = tasks || $scope.tasks;
+                checkUndoRedo();
+            });
 		};
 		$scope.revert = function () {
-			$scope.tasks = memento.revert();
+			memento.revert().then(function (tasks) {
+                $scope.tasks = tasks;
+                checkUndoRedo();
+            });
 		};
 	});

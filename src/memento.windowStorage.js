@@ -13,7 +13,7 @@
             };
 
             this.prev = function () {
-                this.atTail().then(function (result) {
+                return this.atTail().then(function (result) {
                    if (!result) {
                        cursor--;
                        return cursor - 1 >= 0 ?

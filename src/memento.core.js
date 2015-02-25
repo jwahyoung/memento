@@ -8,6 +8,7 @@
             webSql: 'webSql',
             indexedDb: 'indexedDb'
         };
+        var storageMethod = 'indexedDb';
 
         /*jshint newcap: false */
         var coreProvider = function ($store) {
@@ -53,9 +54,12 @@
             };
         };
 
-        this.storageMethod = 'indexedDb';
-
-        coreProvider.$inject = [storeProvider[this.storageMethod]];
-        this.$get = coreProvider;
+        return {
+            setStorageMethod: function (_storageMethod) {
+                storageMethod = _storageMethod;
+                coreProvider.$inject = [storeProvider[storageMethod]];
+            },
+            $get: coreProvider
+        };
     });
 })(window, angular.module('Memento', []), angular);

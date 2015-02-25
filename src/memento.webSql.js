@@ -8,7 +8,7 @@
         });
         localforage.clear(function() {
             // Run this code once the database has been entirely deleted.
-            console.log('indexedDb is now empty.');
+            console.log('webSql is now empty.');
         });
 
         function getUnique() {
