@@ -16,7 +16,7 @@ Memento is designed to support multiple storage methods; the method can be chose
 
 	myApp.config(['MementoProvider', function (MementoProvider) {
 		// Here, we can configure Memento to use a different storage method.
-		MementoProvider.storageMethod = 'window';
+		MementoProvider.setStorageMethod('window'); // also indexedDb, webSql, localStorage
 	}])
 
 _NOTE: Memento currently only supports the 'window' storage method at this time._
