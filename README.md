@@ -30,6 +30,8 @@ With Memento as an app dependency, we can now inject Memento into a controller a
 		];
 
 		var memento = new Memento($scope.tasks);
+		or
+		var memento = new Memento($scope.tasks, 20); // you can set up the max history as 20
 
 A Memento object acts as a stack of states for a given object. Thus, it exposes stack-like methods.
 
