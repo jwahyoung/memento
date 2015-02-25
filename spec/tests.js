@@ -30,52 +30,88 @@ describe('memento core test suite', function () {
 	});
 
 	it('should push() a changed object', function () {
-		expect(memento.push({ key: 'value', num: 2 })).toBe(true);
+        memento.push({key: 'value', num: 2}).then(function (result) {
+            expect(result).toBe(true);
+        });
 	});
 
 	it('should not push() an unchanged object', function () {
-		expect(memento.push({ key: 'value', num: 2 })).toBe(true);
-		expect(memento.push({ key: 'value', num: 2 })).toBe(false);
+        memento.push({key: 'value', num: 2}).then(function (result) {
+            expect(result).toBe(true);
+            memento.push({key: 'value', num: 2}).then(function (result) {
+                expect(result).toBe(false);
+            });
+        });
 
 		// TODO: Deep copy tests.
 	});
 
 	it('should return original object on undo()', function () {
-		memento.push({ key: 'value', num: 2 });
-		expect(memento.undo()).toEqual(seedObject);
+        memento.push({key: 'value', num: 2}).then(function (result) {
+            memento.undo().then(function (result) {
+                expect(result).toEqual(seedObject);
+            });
+        });
 
-		memento.push({ key: 'value', num: 2 });
-		memento.push({ key: 'value', num: 3 });
-		expect(memento.undo()).toEqual({ key: 'value', num: 2 });
+        memento.push({key: 'value', num: 2}).then(function () {
+            memento.push({key: 'value', num: 3}).then(function (result) {
+                memento.undo().then(function (result) {
+                    expect(result).toEqual({ key: 'value', num: 2 });
+                });
+            });
+        });
 	});
 
 	it('should return modified object on redo()', function () {
-		memento.push({ key: 'value', num: 2 });
-		memento.undo();
-		expect(memento.redo()).toEqual({ key: 'value', num: 2 });
+        memento.push({key: 'value', num: 2}).then(function () {
+            memento.undo().then(function () {
+                memento.redo().then(function (result) {
+                    expect(result).toEqual({ key: 'value', num: 2 });
+                });
+            });
+        });
 	});
 
 	it('should not undo() if at beginning of stack', function () {
-		expect(memento.undo()).toBeUndefined();
-		memento.push({ key: 'value', num: 2 });
-		memento.undo();
-		expect(memento.undo()).toBeUndefined();
+        memento.redo().then(function (result) {
+            expect(result).toBeUndefined();
+            memento.push({ key: 'value', num: 2 }).then(function () {
+                memento.undo().then(function () {
+                    memento.undo().then(function (result2) {
+                        expect(result2).toBeUndefined();
+                    });
+                });
+            });
+        });
 	});
 
 	it('should not redo() if at end of stack', function () {
-		expect(memento.redo()).toBeUndefined();
-		memento.push({ key: 'value', num: 2 });
-		memento.undo();
-		memento.redo();
-		expect(memento.redo()).toBeUndefined();
+        memento.redo().then(function (result) {
+            expect(result).toBeUndefined();
+            memento.push({ key: 'value', num: 2 }).then(function () {
+                memento.undo().then(function () {
+                    memento.redo().then(function () {
+                        memento.redo().then(function (result2) {
+                            expect(result2).toBeUndefined();
+                        });
+                    });
+                });
+            });
+        });
 	});
 	
 	it('should return seed object on revert()', function () {
-		memento.push({ key: 'value', num: 2 });
-		memento.push({ key: 'value', num: 3 });
-		memento.push({ key: 'value', num: 4 });
-		memento.push({ key: 'value', num: 5 });
-		expect(memento.revert()).toEqual(seedObject);
+        memento.push({ key: 'value', num: 2 }).then(function () {
+            memento.push({ key: 'value', num: 3 }).then(function () {
+                memento.push({ key: 'value', num: 4 }).then(function () {
+                    memento.push({ key: 'value', num: 5 }).then(function () {
+                        memento.revert().then(function (result) {
+                            expect(result).toEqual(seedObject);
+                        });
+                    });
+                });
+            });
+        });
 	});
  
  	// it('should clear the stack on clear()', function () {
