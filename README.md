@@ -35,12 +35,12 @@ With Memento as an app dependency, we can now inject Memento into a controller a
 
 A Memento object acts as a stack of states for a given object. Thus, it exposes stack-like methods.
 
-- `push(obj)`: Push an object onto the Memento stack, storing its state. 
-- `undo()`: Move backwards in the stack; return the previous state.
-- `redo()`: Move forwards in the stack; return the next state.
-- `revert()`: Return the original (first stored) object. This does not clear the stack.
-- `canUndo()`: Returns true if we can move backwards in the stack - the object has a previous state.
-- `canRedo()`: Returns true if we can move forwards in the stack - the object has a redo state.
+- `push(obj).then(function (result) {})`: Push an object onto the Memento stack, storing its state.
+- `undo().then(function (result) {})`: Move backwards in the stack; return the previous state.
+- `redo().then(function (result) {})`: Move forwards in the stack; return the next state.
+- `revert().then(function (result) {})`: Return the original (first stored) object. This does not clear the stack.
+- `canUndo().then(function (result) {})`: Returns true if we can move backwards in the stack - the object has a previous state.
+- `canRedo().then(function (result) {})`: Returns true if we can move forwards in the stack - the object has a redo state.
 
 Rudimentary usage examples are provided in the `examples` directory.
 

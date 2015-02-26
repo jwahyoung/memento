@@ -9,7 +9,9 @@
 
             this.root = function () {
                 cursor = 0;
-                return ng.copy(_orig);
+                return new Promise(function (resolve) {
+                    resolve(ng.copy(_orig));
+                });
             };
 
             this.prev = function () {

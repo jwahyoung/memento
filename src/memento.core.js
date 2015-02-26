@@ -8,7 +8,7 @@
             webSql: 'webSql',
             indexedDb: 'indexedDb'
         };
-        var storageMethod = 'indexedDb';
+        var storageMethod = 'window';
 
         /*jshint newcap: false */
         var coreProvider = function ($store) {
@@ -53,6 +53,7 @@
                 };
             };
         };
+        coreProvider.$inject = [storeProvider[storageMethod]];
 
         return {
             setStorageMethod: function (_storageMethod) {
