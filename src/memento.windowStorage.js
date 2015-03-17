@@ -29,6 +29,8 @@
                    if (!result) {
                        cursor++;
                        return ng.copy(stack[cursor - 1]);
+                   } else {
+	                   return false;
                    }
                 });
             };

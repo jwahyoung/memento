@@ -1,7 +1,7 @@
 {
   "name": "memento-promise",
-  "version": "1.2.0",
-  "homepage": "https://github.com/iamdenny/memento",
+  "version": "1.3.0",
+  "homepage": "https://github.com/iamdenny/memento-promise",
   "authors": [
     "Denny Lim <hi.iamdenny@navercorp.com>"
   ],

@@ -55,7 +55,7 @@
                             return stack[cursor - 1];
                         });
                     } else {
-                        return result;
+                        return false;
                     }
                 });
             };
@@ -75,7 +75,6 @@
                     }
 
                     var result = !!stack.push(ng.copy(val));
-                    console.log('stack', stack);
                     return localforage
                         .setItem(namespace + '_stack', stack)
                         .then(function () {
