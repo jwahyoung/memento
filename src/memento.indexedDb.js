@@ -69,7 +69,7 @@
                         stack = stack.slice(0, cursor);
                     }
                     if (angular.isNumber(maxCount) && stack.length >= maxCount) {
-                        stack.shift();
+                        localforage.setItem(namespace + '_orig', stack.shift());
                     } else {
                         cursor++;
                     }
