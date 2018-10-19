@@ -8,7 +8,7 @@ This library is in its first stages of life - as such, it's currently learning t
 Usage:
 ------
 
-To use Memento, add the 'Memento' module as an an app dependency.
+To use Memento, add the 'Memento' module as an app dependency.
 
 	angular.module('myApp', ['Memento'])
 
